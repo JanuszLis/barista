@@ -1,0 +1,46 @@
+<button
+  dt-button
+  [attr.tabindex]="tabIndex"
+  [attr.aria-disabled]="disabled"
+  aria-haspopup="dialog"
+  cdk-overlay-origin
+  (click)="toggle()"
+  #origin="cdkOverlayOrigin"
+>
+  {{ _valueLabel || 'Select date' }}
+</button>
+
+<ng-template
+  cdk-connected-overlay
+  cdkConnectedOverlayLockPosition
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="panelOpen"
+  [cdkConnectedOverlayPositions]="_positions"
+  (backdropClick)="close()"
+  (attach)="_onAttached()"
+  (detach)="close()"
+>
+  <div
+    #panel
+    class="dt-datepicker-panel"
+    [class.dt-datepicker-panel-done-animating]="_panelDoneAnimating"
+    [ngClass]="panelClass"
+    [@transformPanel]="'showing'"
+    (keydown)="_handleKeydown($event)"
+  >
+    <div
+      class="dt-datepicker-content"
+      [@fadeInContent]="'showing'"
+      (@fadeInContent.done)="_onFadeInDone()"
+    >
+      <dt-calendar
+        [selected]="value"
+        [startAt]="startAt"
+        (selectedChange)="_setSelectedValue($event)"
+      ></dt-calendar>
+      <dt-timepicker></dt-timepicker>
+    </div>
+  </div>
+</ng-template>

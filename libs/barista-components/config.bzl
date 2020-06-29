@@ -15,6 +15,7 @@ COMPONENTS = [
     "context-dialog",
     "copy-to-clipboard",
     "core",
+    "datepicker",
     "drawer",
     "empty-state",
     "event-chart",

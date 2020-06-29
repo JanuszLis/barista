@@ -1,0 +1,49 @@
+<div class="dt-calendar-header">
+  <button
+    dt-icon-button
+    variant="nested"
+    (click)="_addMonths(-12)"
+    class="dt-calendar-header-button dt-calendar-header-button-prev-year"
+    aria-label="Previous Year"
+  >
+    <dt-icon name="learn-more"></dt-icon>
+  </button>
+  <button
+    dt-icon-button
+    variant="nested"
+    (click)="_addMonths(-1)"
+    class="dt-calendar-header-button dt-calendar-header-button-prev-month"
+    aria-label="Previous Month"
+  >
+    <dt-icon name="dropdownclosed"></dt-icon>
+  </button>
+
+  <span class="dt-calendar-header-label">{{ _label }}</span>
+
+  <button
+    dt-icon-button
+    variant="nested"
+    (click)="_addMonths(1)"
+    class="dt-calendar-header-button dt-calendar-header-button-next-month"
+    aria-label="Next Month"
+  >
+    <dt-icon name="dropdownclosed"></dt-icon>
+  </button>
+  <button
+    dt-icon-button
+    variant="nested"
+    (click)="_addMonths(12)"
+    class="dt-calendar-header-button dt-calendar-header-button-next-year"
+    aria-label="Next Year"
+  >
+    <dt-icon name="learn-more"></dt-icon>
+  </button>
+</div>
+
+<dt-calendar-body
+  [selected]="selected"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [(activeDate)]="activeDate"
+  (selectedChange)="_selectedValueChanged($event)"
+></dt-calendar-body>

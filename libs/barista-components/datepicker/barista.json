@@ -1,0 +1,22 @@
+{
+  "title": "Datepicker",
+  "description": "ToDo",
+  "postid": "datepicker",
+  "identifier": "Da",
+  "category": "components",
+  "contributors": {
+    "dev": [
+      {
+        "name": "Thomas Pink",
+        "githubuser": "thomaspink"
+      }
+    ],
+    "ux": [
+      {
+        "name": "Ursula Wieshofer",
+        "githubuser": "ursula-wieshofer"
+      }
+    ]
+  },
+  "tags": ["datepicker", "component", "angular"]
+}

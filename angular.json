@@ -1818,6 +1818,46 @@
       },
       "schematics": {}
     },
+    "datepicker": {
+      "projectType": "library",
+      "root": "libs/barista-components/datepicker",
+      "sourceRoot": "libs/barista-components/datepicker/src",
+      "prefix": "dt",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/barista-components/datepicker/tsconfig.lib.json",
+              "libs/barista-components/datepicker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/barista-components/datepicker/**"
+            ]
+          }
+        },
+        "lint-styles": {
+          "builder": "./dist/libs/workspace:stylelint",
+          "options": {
+            "stylelintConfig": ".stylelintrc",
+            "reportFile": "dist/stylelint/report.xml",
+            "exclude": ["**/node_modules/**"],
+            "files": ["libs/barista-components/datepicker/**/*.scss"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/barista-components/datepicker/jest.config.js",
+            "tsConfig": "libs/barista-components/datepicker/tsconfig.spec.json",
+            "setupFile": "libs/barista-components/datepicker/src/test-setup.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
+    },
     "drawer": {
       "projectType": "library",
       "root": "libs/barista-components/drawer",

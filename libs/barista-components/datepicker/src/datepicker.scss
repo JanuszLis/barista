@@ -1,0 +1,29 @@
+@import '../../core/src/style/variables';
+
+$dt-datepicker-panel-width: 300px;
+
+:host {
+  display: block;
+}
+
+.dt-datepicker-panel {
+  width: $dt-datepicker-panel-width;
+  background: #ffffff;
+  box-sizing: border-box;
+  border: 1px solid $disabledcolor;
+  border-radius: 3px;
+  will-change: transform;
+
+  // Prevents the content from repainting on scroll.
+  backface-visibility: hidden;
+
+  // Makes sure the opening scale animation starts from the top
+  transform-origin: left top;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; // for momentum scroll on mobile
+}
+
+.dt-datepicker-content {
+  overflow: hidden;
+  padding: 8px;
+}

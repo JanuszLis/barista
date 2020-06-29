@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+}
+
+.dt-timepicker-part {
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.dt-timepicker-separator {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 0 16px;
+}
