@@ -34,18 +34,6 @@ pipeline {
       }
 
       stages {
-        stage("Checkout barista icons") {
-          steps {
-            checkout changelog: false, poll: false, scm: [
-              $class: "GitSCM",
-              branches: [[name: "*/master"]],
-              doGenerateSubmoduleConfigurations: false,
-              extensions: [[$class: "RelativeTargetDirectory", relativeTargetDir: "$ICONS_PATH"]],
-              submoduleCfg: [], userRemoteConfigs: [[url: "${BITBUCKET_URL}scm/wx/barista-icons.git" ]]
-            ]
-          }
-        }
-
         stage("Internal Preparations") {
           when {
             expression { return !params.PUBLIC_BUILD }
@@ -91,18 +79,6 @@ pipeline {
                     npm ci --ignore-scripts
                   '''
                 }
-              }
-            }
-
-            script {
-              if (params.PUBLIC_BUILD ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/ ) {
-                echo "Public build - Replace internal iconpack with public ones."
-                dir(WORKSPACE_DIR) {
-                  sh '''
-                    rm -rf ./node_modules/@dynatrace/barista-icons
-                    cp -R ./dist/tmp/barista-icons-public ./node_modules/@dynatrace/barista-icons
-                  '''
-                 }
               }
             }
 
