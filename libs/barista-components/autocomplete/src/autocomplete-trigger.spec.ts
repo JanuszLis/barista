@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
-export * from './combobox-simple-example/combobox-simple-example';
-export * from './combobox-custom-option-height-example/combobox-custom-option-height-example';
-export * from './combobox-examples.module';
+import { calculateOptionHeight } from '@dynatrace/barista-components/autocomplete';
+
+describe.each([
+  [0, 28, 256],
+  [27, 28, 256],
+  [28, 28, 256],
+  [40, 40, 256],
+  [256, 256, 384],
+  [276, 276, 414],
+])(
+  'calculateOptionHeight(%i)',
+  (preferredOptionHeight, actualHeight, actualMaxPanelHeight) => {
+    const heightConfig = calculateOptionHeight(preferredOptionHeight);
+
+    expect(heightConfig.height).toBe(actualHeight);
+    expect(heightConfig.maxPanelHeight).toBe(actualMaxPanelHeight);
+  },
+);
