@@ -126,6 +126,7 @@
       "tags": ["scope:elements", "type:library"],
       "implicitDependencies": [
         "fluid-button",
+        "fluid-button-group",
         "fluid-checkbox",
         "fluid-switch",
         "fluid-tab-group"
@@ -339,6 +340,10 @@
       "tags": ["scope:elements", "type:library"],
       "implicitDependencies": ["shared-design-tokens", "testing-custom-element"]
     },
+    "fluid-button-group": {
+      "tags": ["scope:elements", "type:library"],
+      "implicitDependencies": ["shared-design-tokens", "testing-custom-element"]
+    },
     "fluid-checkbox": {
       "tags": ["scope:elements", "type:library"],
       "implicitDependencies": ["shared-design-tokens", "testing-custom-element"]
@@ -350,6 +355,9 @@
     "fluid-tab-group": {
       "tags": ["scope:elements", "type:library"],
       "implicitDependencies": ["shared-design-tokens", "testing-custom-element"]
+    },
+    "fluid-utils": {
+      "tags": ["type:library"]
     },
     "fluid-dev": {
       "tags": ["type:app"]

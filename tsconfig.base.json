@@ -222,6 +222,9 @@
       "@dynatrace/fluid-elements/button": [
         "libs/fluid-elements/button/src/index.ts"
       ],
+      "@dynatrace/fluid-elements/button-group": [
+        "libs/fluid-elements/button-group/src/index.ts"
+      ],
       "@dynatrace/fluid-elements/checkbox": [
         "libs/fluid-elements/checkbox/src/index.ts"
       ],
@@ -262,7 +265,8 @@
       "@dynatrace/design-tokens-ui/shared": [
         "libs/design-tokens-ui/shared/src/index.ts"
       ],
-      "@dynatrace/shared/keycodes": ["libs/shared/keycodes/src/index.ts"]
+      "@dynatrace/shared/keycodes": ["libs/shared/keycodes/src/index.ts"],
+      "@dynatrace/shared/fluid-utils": ["libs/shared/fluid-utils/src/index.ts"]
     },
     "plugins": [
       {

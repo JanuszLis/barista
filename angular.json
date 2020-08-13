@@ -2925,6 +2925,52 @@
         }
       }
     },
+    "fluid-button-group": {
+      "root": "libs/fluid-elements/button-group",
+      "sourceRoot": "libs/fluid-elements/button-group/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "./dist/libs/workspace:typescript",
+          "options": {
+            "tsConfig": "libs/fluid-elements/button-group/tsconfig.lib.json",
+            "outDir": "dist/out-tsc"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "package": {
+          "builder": "./dist/libs/workspace:package-element",
+          "options": {
+            "outputPath": "dist/libs/fluid-elements/button-group",
+            "entryFile": "dist/out-tsc/libs/fluid-elements/button-group/src/index.js",
+            "project": "libs/fluid-elements/button-group/package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/fluid-elements/button-group/tsconfig.lib.json",
+              "libs/fluid-elements/button-group/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/fluid-elements/button-group/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/fluid-elements/button-group/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "fluid-checkbox": {
       "root": "libs/fluid-elements/checkbox",
       "sourceRoot": "libs/fluid-elements/checkbox/src",
@@ -3055,6 +3101,49 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/fluid-elements/tab-group/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "fluid-utils": {
+      "root": "libs/shared/fluid-utils",
+      "sourceRoot": "libs/shared/fluid-utils/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "./dist/libs/workspace:typescript",
+          "options": {
+            "tsConfig": "libs/shared/fluid-utils/tsconfig.lib.json",
+            "outDir": "dist/out-tsc"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "package": {
+          "builder": "./dist/libs/workspace:package-element",
+          "options": {
+            "outputPath": "dist/libs/shared/fluid-utils",
+            "entryFile": "dist/out-tsc/libs/shared/fluid-utils/src/index.js",
+            "project": "libs/shared/fluid-utils/package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/fluid-utils/tsconfig.lib.json",
+              "libs/shared/fluid-utils/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared/fluid-utils/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/fluid-utils/jest.config.js",
             "passWithNoTests": true
           }
         }
