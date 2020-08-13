@@ -953,6 +953,8 @@ describe('DtFilterField', () => {
       expect(options[0].textContent).toContain('Upper Austria');
       expect(options[1].textContent).toContain('Vienna');
     });
+
+    it('should mark the input as readonly while loading async data', () => {});
   });
 
   describe('with range option', () => {
