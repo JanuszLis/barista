@@ -31,7 +31,7 @@ npm_deps_aspect = aspect(
 def _write_rollup_config(ctx, substitutions = {}):
     config = ctx.actions.declare_file("_%s.rollup_config.js" % ctx.label.name)
     ctx.actions.expand_template(
-        template = ctx.file._rollup_config,
+        template = ctx.file.rollup_config,
         output = config,
         substitutions = substitutions,
     )
@@ -123,7 +123,7 @@ rollup = rule(
             cfg = "host",
             default = "@npm//rollup/bin:rollup",
         ),
-        "_rollup_config": attr.label(
+        "rollup_config": attr.label(
             default = Label("//tools/bazel_rules/rollup:rollup.config.js"),
             allow_single_file = True,
         ),

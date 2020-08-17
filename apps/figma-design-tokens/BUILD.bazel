@@ -1,0 +1,82 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_library", "ts_config")
+load("@io_bazel_rules_sass//:defs.bzl", "sass_binary")
+load("//tools/bazel_rules:index.bzl", "figma_bundle", "figma_plugin", "rollup")
+
+package(default_visibility = ["//:__subpackages__"])
+
+# Allow any ts_library rules in this workspace to reference the config
+exports_files(
+    [
+        "tsconfig.json",
+        "rollup.config.js",
+        "manifest.json",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+sass_binary(
+    name = "styles",
+    src = "src/styles.scss",
+    include_paths = ["node_modules"],
+    sourcemap = False,
+)
+
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.json",
+    deps = [
+        "//libs/barista-components:tsconfig",
+    ],
+)
+
+ts_library(
+    name = "compile",
+    srcs = glob(["src/**/*.ts"]),
+    deps = [
+        "@npm//@figma/plugin-typings",
+        "//libs/fluid-elements/button:compile",
+        "//libs/fluid-elements/checkbox:compile",
+        "@npm//axios",
+        "@npm//lit-element",
+    ],
+    tsconfig = "tsconfig"
+)
+
+rollup(
+    name = "build_code",
+    deps = [
+        ":compile",
+        "@npm//@rollup/plugin-json",
+    ],
+    entry_point = {
+        "src/code.ts": "code",
+    },
+    rollup_config = "rollup.config.js"
+)
+
+rollup(
+    name = "build_worker_js",
+    deps = [
+        ":compile",
+        "@npm//@rollup/plugin-json",
+    ],
+    entry_point = {
+        "src/worker.ts": "worker",
+    },
+    rollup_config = "rollup.config.js"
+)
+
+figma_bundle(
+    name = "build_worker",
+    srcs = [
+        ":build_worker_js",
+        ":styles",
+    ],
+)
+
+figma_plugin(
+    name = "build_plugin",
+    manifest_json = ":manifest.json",
+    code_js = ":build_code",
+    worker_html = ":build_worker",
+)
