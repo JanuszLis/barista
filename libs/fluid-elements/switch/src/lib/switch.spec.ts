@@ -112,6 +112,27 @@ describe('Fluid switch', () => {
     });
   });
 
+  describe('aria-checked attribute', () => {
+    it('should have aria-checked set to false by default', () => {
+      expect(fixture.hasAttribute('aria-checked')).toBeTruthy();
+      expect(fixture.getAttribute('aria-checked')).toBe('false');
+    });
+
+    it('should have aria-checked set to false when the switch is not checked', async () => {
+      fixture.checked = false;
+      await tick();
+      expect(fixture.hasAttribute('aria-checked')).toBeTruthy();
+      expect(fixture.getAttribute('aria-checked')).toBe('false');
+    });
+
+    it('should have aria-checked set to true when the switch is checked', async () => {
+      fixture.checked = true;
+      await tick();
+      expect(fixture.hasAttribute('aria-checked')).toBeTruthy();
+      expect(fixture.getAttribute('aria-checked')).toBe('true');
+    });
+  });
+
   describe('disabled attribute', () => {
     it('should set the disabled state when the attribute is present', async () => {
       fixture.setAttribute('disabled', '');
