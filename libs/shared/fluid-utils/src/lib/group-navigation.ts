@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ARROW_LEFT, ARROW_RIGHT } from '../../../keycodes/src';
+import { ARROW_LEFT, ARROW_RIGHT } from '@dynatrace/shared/keycodes';
 
 /** Calculate based on a length and the direction (arrow key) what the next index is supporting rotationing */
 export function getNextIndex(

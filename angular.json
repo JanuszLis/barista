@@ -3129,23 +3129,6 @@
             "entryFile": "dist/out-tsc/libs/shared/fluid-utils/src/index.js",
             "project": "libs/shared/fluid-utils/package.json"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/shared/fluid-utils/tsconfig.lib.json",
-              "libs/shared/fluid-utils/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/shared/fluid-utils/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared/fluid-utils/jest.config.js",
-            "passWithNoTests": true
-          }
         }
       }
     },
