@@ -28,11 +28,13 @@ function getTabRootElement(
 
 describe('Fluid tab', () => {
   let fixture: FluidTab;
-  let tabActivatedSpy: jest.Mock;
+  let tabSelected: jest.Mock;
 
-  /** Checks if the current fixture has an active tab */
-  function isActive(): boolean {
-    return fixture.shadowRoot?.querySelector('.fluid-state--active') !== null;
+  /** Checks if the current fixture has an selected tab */
+  function isselected(): boolean {
+    return (
+      fixture.shadowRoot?.querySelector('fluid-state--selected') !== undefined
+    );
   }
 
   beforeEach(() => {
@@ -50,8 +52,8 @@ describe('Fluid tab', () => {
     // Add spied eventListeners
     fixture = document.querySelector<FluidTab>('fluid-tab')!;
 
-    tabActivatedSpy = jest.fn();
-    fixture.addEventListener('tabActivated', tabActivatedSpy);
+    tabSelected = jest.fn();
+    fixture.addEventListener('tabSelected', tabSelected);
   });
 
   afterEach(() => {
@@ -62,19 +64,20 @@ describe('Fluid tab', () => {
     expect(fixture).not.toBe(null);
   });
 
-  describe('active attribute', () => {
-    it('should set the state to active when the attribute is set to true', async () => {
-      fixture.setAttribute('active', '');
+  describe('selected attribute', () => {
+    // Attributes: tabid, disabled, selected
+    it('should set the state to selected when the attribute is set to true', async () => {
+      fixture.setAttribute('selected', '');
       await tick();
-      expect(fixture.active).toBeTruthy();
-      expect(isActive()).toBeTruthy();
+      expect(fixture.selected).toBeTruthy();
+      expect(isselected()).toBeTruthy();
     });
 
-    it('should set the state to active when the property is set to true', async () => {
-      fixture.active = true;
+    it('should set the state to selected when the attribute is set to true', async () => {
+      fixture.selected = true;
       await tick();
-      expect(fixture.active).toBeTruthy();
-      expect(isActive()).toBeTruthy();
+      expect(fixture.selected).toBeTruthy();
+      expect(isselected()).toBeTruthy();
     });
 
     it('should remove active when the attribute is removed', async () => {
@@ -137,10 +140,10 @@ describe('Fluid tab', () => {
       expect(fixture.hasAttribute('disabled')).toBeTruthy();
     });
 
-    it('should set active to false when disabled is true', async () => {
+    it('should set selected to false when disabled is true', async () => {
       fixture.disabled = true;
       await tick();
-      expect(fixture.active).toBeFalsy();
+      expect(fixture.selected).toBeFalsy();
     });
 
     it('should set tabindex to -1 when disabled is true', async () => {
@@ -150,11 +153,32 @@ describe('Fluid tab', () => {
     });
   });
 
-  describe('tabActivated Event', () => {
+  describe('aria-selected attribute', () => {
+    it('should have aria-selected set to false by default', () => {
+      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
+      expect(fixture.getAttribute('aria-selected')).toBe('false');
+    });
+
+    it('should have aria-selected set to false when the tab is not selected', async () => {
+      fixture.selected = false;
+      await tick();
+      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
+      expect(fixture.getAttribute('aria-selected')).toBe('false');
+    });
+
+    it('should have aria-selected set to true when the tab is selected', async () => {
+      fixture.selected = true;
+      await tick();
+      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
+      expect(fixture.getAttribute('aria-selected')).toBe('true');
+    });
+  });
+
+  describe('tabSelected event', () => {
     it('should fire event when tab is clicked', async () => {
       getTabRootElement(fixture)?.click();
       await tick();
-      expect(tabActivatedSpy).toHaveBeenCalledTimes(1);
+      expect(tabSelected).toHaveBeenCalledTimes(1);
     });
   });
 });
