@@ -131,6 +131,21 @@ describe('Fluid switch', () => {
       expect(fixture.hasAttribute('aria-checked')).toBeTruthy();
       expect(fixture.getAttribute('aria-checked')).toBe('true');
     });
+
+    it('should have aria-checked set to true when the switch is clicked', async () => {
+      const label = fixture.shadowRoot?.querySelector('label');
+      label?.click();
+      await tick();
+      expect(fixture.hasAttribute('aria-checked')).toBeTruthy();
+      expect(fixture.getAttribute('aria-checked')).toBe('true');
+    });
+    it('should have aria-checked set to true when the switch is focused and space is pressed', async () => {
+      const checkbox = fixture.shadowRoot?.querySelector('svg');
+      dispatchKeyboardEvent(checkbox!, 'keyup', SPACE);
+      await tick();
+      expect(fixture.hasAttribute('aria-checked')).toBeTruthy();
+      expect(fixture.getAttribute('aria-checked')).toBe('true');
+    });
   });
 
   describe('disabled attribute', () => {
