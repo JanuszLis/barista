@@ -41,6 +41,11 @@ function resolveModuleFileName(fileName) {
   if (existsSync(`${absolutePath}/src/index.js`)) {
     return `${absolutePath}/src/index.js`;
   }
+
+  // TODO: lukas.holzer find a more elegant solution for getting the module_root for design tokens
+  if (existsSync(`${absolutePath}/generated/index.js`)) {
+    return `${absolutePath}/generated/index.js`;
+  }
 }
 
 /**
@@ -86,9 +91,15 @@ function resolvePath(moduleId) {
  * @param {string} options.rootDir
  */
 function moduleResolver(moduleId, options) {
-  if (moduleId === 'lodash-es') {
-    // map lodash-es to lodash bundle since jest needs commonjs
-    return runFilesHelper.resolve('npm/node_modules/lodash/index.js'); //'node_modules/lodash/index.js',
+  if (moduleId.match(/^lit-html/)) {
+    return runFilesHelper.resolve('npm/lit-html/lit-html.umd.js');
+  }
+
+  switch (moduleId) {
+    case 'lit-element':
+      return runFilesHelper.resolve('npm/lit-element/lit-element.umd.js');
+    case 'lodash-es':
+      return runFilesHelper.resolve('npm/lodash-es/lodash-es.umd.js');
   }
 
   // resolve workspace imports with the bazel module mappings
