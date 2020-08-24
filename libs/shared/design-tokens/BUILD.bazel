@@ -17,6 +17,16 @@ filegroup(
     ]) + ["//libs/testing/fixtures"] + COMPONENT_TARGETS,
 )
 
+filegroup(
+    name = "design-tokens-entrypoints",
+    srcs = glob(["src/lib/global/*.yml", "src/lib/patterns/*.yml"])
+)
+
+filegroup(
+    name = "design-tokens-aliases-entrypoints",
+    srcs = glob(["src/lib/aliases/*.yml"])
+)
+
 stylelint(
     name = "stylelint",
     srcs = glob(["**/*.scss"]),

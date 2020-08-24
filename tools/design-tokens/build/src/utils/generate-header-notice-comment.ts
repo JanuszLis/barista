@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
-export * from './utils';
-export * from './interfaces';
-export * from './circle-ci-api';
+export const generateHeaderNoticeComment = (
+  commentStart = '/*',
+  commentLine = ' *',
+  commentEnd = ' */',
+) => `${commentStart}
+${commentLine} THIS FILE IS GENERATED BASED ON THE DESIGN TOKENS DEFINED IN THE src/**.yml
+${commentLine} FILES, DO NOT CHANGE MANUALLY.
+${commentLine} TO GENERATE THESE FILES RUN 'ng build shared-design-tokens'
+${commentEnd}`;
