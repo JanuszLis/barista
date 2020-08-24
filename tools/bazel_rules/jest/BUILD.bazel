@@ -1,6 +1,26 @@
+load("@npm//@babel/cli:index.bzl", "babel")
+
 package(default_visibility = ["//:__subpackages__"])
 
 exports_files([
     "jest-runner.js",
     "jest-resolver.js",
 ])
+
+babel(
+    name = "lit-html",
+    args = [
+        "external/npm/node_modules/lit-html",
+        "--no-babelrc",
+        "--source-maps",
+        "--presets=@babel/preset-env",
+        "--verbose",
+        "-d",
+        "$(@D)/",
+    ],
+    data = [
+        "@npm//@babel/preset-env",
+        "@npm//lit-html",
+    ],
+    output_dir = True,
+)

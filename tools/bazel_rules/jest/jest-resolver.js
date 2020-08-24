@@ -91,8 +91,11 @@ function resolvePath(moduleId) {
  * @param {string} options.rootDir
  */
 function moduleResolver(moduleId, options) {
-  if (moduleId.match(/^lit-html/)) {
-    return runFilesHelper.resolve('npm/lit-html/lit-html.umd.js');
+  if (moduleId.startsWith('lit-html')) {
+    const absPath = runFilesHelper.resolve(
+      'dynatrace/tools/bazel_rules/jest/lit-html',
+    );
+    return resolveModuleFileName(moduleId.replace('lit-html', absPath));
   }
 
   switch (moduleId) {

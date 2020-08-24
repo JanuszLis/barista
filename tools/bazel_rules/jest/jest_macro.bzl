@@ -51,8 +51,9 @@ def jest_macro(
             "@npm//jest-preset-angular",
             "@npm//jest-junit",
             "@npm//lodash-es:lodash-es__umd",
-            "@npm//lit-html:lit-html__umd",
+            # "@npm//lit-html:lit-html__umd",
             "@npm//lit-element:lit-element__umd",
+            "//tools/bazel_rules/jest:lit-html",
 
             # needed by the runner and resolver
             "//tools/bazel_rules/jest:jest-runner.js",
