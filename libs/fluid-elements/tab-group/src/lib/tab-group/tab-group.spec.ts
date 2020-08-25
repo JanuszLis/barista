@@ -154,7 +154,7 @@ describe('Fluid tab group', () => {
       );
     });
 
-    it('should set tabindex to 0 when tab is activated using keys', async () => {
+    it('should set tabindex to 0 when tab is selected using keys', async () => {
       const tab = fixture.querySelector<FluidTab>('fluid-tab');
       tab?.focus();
       await tick();
@@ -181,7 +181,7 @@ describe('Fluid tab group', () => {
     });
   });
 
-  describe('ç event', () => {
+  describe('activeTabChanged event', () => {
     it('should fire an event when a tab is clicked', async () => {
       const tab = getLastSpanElementFromFluidTab();
       tab?.click();
@@ -209,7 +209,7 @@ describe('Fluid tab group', () => {
         <fluid-tab tabid="section2">
           Section 2
         </fluid-tab>
-      </fluid-tab-gåroup>
+      </fluid-tab-group>
       `;
 
       fixture = document.querySelector<FluidTabGroup>('fluid-tab-group')!;

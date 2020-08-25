@@ -28,10 +28,10 @@ function getTabRootElement(
 
 describe('Fluid tab', () => {
   let fixture: FluidTab;
-  let tabActivated: jest.Mock;
+  let tabActivatedSpy: jest.Mock;
 
   /** Checks if the current fixture has an active tab */
-  function isactive(): boolean {
+  function isActive(): boolean {
     return (
       fixture.shadowRoot?.querySelector('fluid-state--active') !== undefined
     );
@@ -52,8 +52,8 @@ describe('Fluid tab', () => {
     // Add spied eventListeners
     fixture = document.querySelector<FluidTab>('fluid-tab')!;
 
-    tabActivated = jest.fn();
-    fixture.addEventListener('tabActivated', tabActivated);
+    tabActivatedSpy = jest.fn();
+    fixture.addEventListener('tabActivated', tabActivatedSpy);
   });
 
   afterEach(() => {
@@ -65,19 +65,18 @@ describe('Fluid tab', () => {
   });
 
   describe('active attribute', () => {
-    // Attributes: tabid, disabled, active
     it('should set the state to active when the attribute is set to true', async () => {
       fixture.setAttribute('active', '');
       await tick();
       expect(fixture.active).toBeTruthy();
-      expect(isactive()).toBeTruthy();
+      expect(isActive()).toBeTruthy();
     });
 
-    it('should set the state to active when the attribute is set to true', async () => {
+    it('should set the state to active when the property is set to true', async () => {
       fixture.active = true;
       await tick();
       expect(fixture.active).toBeTruthy();
-      expect(isactive()).toBeTruthy();
+      expect(isActive()).toBeTruthy();
     });
 
     it('should remove active when the attribute is removed', async () => {
@@ -178,7 +177,7 @@ describe('Fluid tab', () => {
     it('should fire event when tab is clicked', async () => {
       getTabRootElement(fixture)?.click();
       await tick();
-      expect(tabActivated).toHaveBeenCalledTimes(1);
+      expect(tabActivatedSpy).toHaveBeenCalledTimes(1);
     });
   });
 });

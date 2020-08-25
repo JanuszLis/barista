@@ -17,14 +17,14 @@
 /** Custom event implementation fires when the active tab has changes */
 /** Custom event implementation fires when the active tab has changes */
 export class FluidTabGroupActiveTabChanged extends CustomEvent<any> {
-  constructor(public activeTab: string) {
+  constructor(public activeTabId: string) {
     super('activeTabChanged', { bubbles: true, composed: true });
   }
 }
 
 /** Custom event implementation that fires when a tab is clicked providing the active tab id  */
 export class FluidTabActivatedEvent extends CustomEvent<any> {
-  constructor(public activeTab: string) {
+  constructor(public activeTabId: string) {
     super('tabActivated', { bubbles: true, composed: true });
   }
 }

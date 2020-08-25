@@ -102,7 +102,7 @@ export class FluidTabGroup extends LitElement {
   /** Sets the active tab on click */
   private _handleClick(event: FluidTabActivatedEvent): void {
     const toActivateTab = this.tabChildren.find(
-      (tabItem) => tabItem.tabid === event.activeTab,
+      (tabItem) => tabItem.tabid === event.activeTabId,
     );
 
     if (toActivateTab) {
@@ -113,11 +113,11 @@ export class FluidTabGroup extends LitElement {
         toResetTab.active = false;
         toResetTab.tabbed = false;
       }
-      this.activetabid = event.activeTab;
+      this.activetabid = event.activeTabId;
 
       toActivateTab.active = true;
       toActivateTab.tabindex = 0;
-      this.dispatchEvent(new FluidTabGroupActiveTabChanged(event.activeTab));
+      this.dispatchEvent(new FluidTabGroupActiveTabChanged(event.activeTabId));
     }
   }
 
@@ -189,7 +189,7 @@ export class FluidTabGroup extends LitElement {
 
   /** Resets the tabindex if the user lost focus without activating the activated tab */
   private _handleBlur(event: FluidTabBlurredEvent): void {
-    // Sets the tabindex but not activated tabs tabindex to -1
+    // Sets the selected but not activated tabs tabindex to -1
     const toDisableTabIndexTab = this.tabChildren.find(
       (tab) => tab.tabid === event.tabId,
     );

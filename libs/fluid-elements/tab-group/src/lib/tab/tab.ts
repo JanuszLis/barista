@@ -253,7 +253,7 @@ export class FluidTab extends LitElement {
     this.dispatchEvent(new FluidTabActiveSetEvent(this.tabid));
   }
 
-  /** Dispatches the custom event  */
+  /** Dispatches the custom event with the this tabid  */
   private _dispatchActiveTabEvent(): void {
     this.dispatchEvent(new FluidTabActiveSetEvent(this.tabid));
   }
