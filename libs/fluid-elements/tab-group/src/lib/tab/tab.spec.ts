@@ -53,7 +53,7 @@ describe('Fluid tab', () => {
     fixture = document.querySelector<FluidTab>('fluid-tab')!;
 
     tabActivatedSpy = jest.fn();
-    fixture.addEventListener('tabActivated', tabActivatedSpy);
+    fixture.addEventListener('activeSet', tabActivatedSpy);
   });
 
   afterEach(() => {
@@ -152,32 +152,33 @@ describe('Fluid tab', () => {
     });
   });
 
-  describe('aria-active attribute', () => {
-    it('should have aria-active set to false by default', () => {
-      expect(fixture.hasAttribute('aria-active')).toBeTruthy();
-      expect(fixture.getAttribute('aria-active')).toBe('false');
+  describe('aria-selected attribute', () => {
+    it('should have aria-selected set to false by default', () => {
+      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
+      expect(fixture.getAttribute('aria-selected')).toBe('false');
     });
 
-    it('should have aria-active set to false when the tab is not active', async () => {
+    it('should have aria-selected set to false when the tab is not active', async () => {
       fixture.active = false;
       await tick();
-      expect(fixture.hasAttribute('aria-active')).toBeTruthy();
-      expect(fixture.getAttribute('aria-active')).toBe('false');
+      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
+      expect(fixture.getAttribute('aria-selected')).toBe('false');
     });
 
-    it('should have aria-active set to true when the tab is active', async () => {
+    it('should have aria-selected set to true when the tab is active', async () => {
       fixture.active = true;
       await tick();
-      expect(fixture.hasAttribute('aria-active')).toBeTruthy();
-      expect(fixture.getAttribute('aria-active')).toBe('true');
+      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
+      expect(fixture.getAttribute('aria-selected')).toBe('true');
     });
   });
 
   describe('tabactive event', () => {
     it('should fire event when tab is clicked', async () => {
+      expect(tabActivatedSpy).toHaveBeenCalledTimes(0);
       getTabRootElement(fixture)?.click();
       await tick();
-      expect(tabActivatedSpy).toHaveBeenCalledTimes(1);
+      expect(tabActivatedSpy).toHaveBeenCalledTimes(2);
     });
   });
 });

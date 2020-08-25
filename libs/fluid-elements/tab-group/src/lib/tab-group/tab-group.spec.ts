@@ -128,23 +128,25 @@ describe('Fluid tab group', () => {
       await tick();
       expect(tab?.active).toBeTruthy();
       expect(fixture.getAttribute('activetabid')).toBe('section2');
-      expect(fixture.getAttribute('activetabid')).toBe('section1');
-      dispatchKeyboardEvent(tab!, 'keydown', ARROW_RIGHT);
+      dispatchKeyboardEvent(tab!, 'keyup', ARROW_RIGHT);
       await tick();
       expect(keyupSpy).toBeCalledTimes(1);
-      dispatchKeyboardEvent(document.activeElement!, 'keydown', SPACE);
+      dispatchKeyboardEvent(document.activeElement!, 'keyup', SPACE);
+      await tick();
       expect(activeTabChangedSpy).toHaveBeenCalledTimes(1);
-      expect(fixture.getAttribute('activetabid')).toBe('section2');
+      expect(fixture.getAttribute('activetabid')).toBe('section1');
     });
   });
 
   describe('tabindex attribute', () => {
-    it('should set tabindex to 0 when tab is clicked', async () => {
+    // tslint:disable-next-line: dt-no-focused-tests
+    it.only('should set tabindex to 0 when tab is clicked', async () => {
       const tab = getFirstSpanElementFromFluidTab();
       tab?.click();
       await tick();
       fixture.querySelector<FluidTab>('fluid-tab:last-child')!.click();
       getLastSpanElementFromFluidTab().click();
+      await tick();
       await tick();
       expect(getFirstSpanElementFromFluidTab().getAttribute('tabindex')).toBe(
         '-1',
@@ -194,7 +196,7 @@ describe('Fluid tab group', () => {
       tab?.focus();
       dispatchKeyboardEvent(tab!, 'keyup', ARROW_RIGHT);
       await tick();
-      dispatchKeyboardEvent(document.activeElement!, 'keydown', SPACE);
+      dispatchKeyboardEvent(document.activeElement!, 'keyup', SPACE);
       expect(activeTabChangedSpy).toBeCalledTimes(1);
     });
   });

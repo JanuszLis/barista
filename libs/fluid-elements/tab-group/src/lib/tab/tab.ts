@@ -261,6 +261,7 @@ export class FluidTab extends LitElement {
   /** Handles the click event. Dispatches the tab when a new tab was clicked */
   private handleClick(): void {
     if (!this._active) {
+      this.active = true;
       this._dispatchActiveTabEvent();
     }
   }
