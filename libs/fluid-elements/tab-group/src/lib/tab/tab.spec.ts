@@ -28,12 +28,12 @@ function getTabRootElement(
 
 describe('Fluid tab', () => {
   let fixture: FluidTab;
-  let tabSelected: jest.Mock;
+  let tabActivated: jest.Mock;
 
-  /** Checks if the current fixture has an selected tab */
-  function isselected(): boolean {
+  /** Checks if the current fixture has an active tab */
+  function isactive(): boolean {
     return (
-      fixture.shadowRoot?.querySelector('fluid-state--selected') !== undefined
+      fixture.shadowRoot?.querySelector('fluid-state--active') !== undefined
     );
   }
 
@@ -52,8 +52,8 @@ describe('Fluid tab', () => {
     // Add spied eventListeners
     fixture = document.querySelector<FluidTab>('fluid-tab')!;
 
-    tabSelected = jest.fn();
-    fixture.addEventListener('tabSelected', tabSelected);
+    tabActivated = jest.fn();
+    fixture.addEventListener('tabActivated', tabActivated);
   });
 
   afterEach(() => {
@@ -64,20 +64,20 @@ describe('Fluid tab', () => {
     expect(fixture).not.toBe(null);
   });
 
-  describe('selected attribute', () => {
-    // Attributes: tabid, disabled, selected
-    it('should set the state to selected when the attribute is set to true', async () => {
-      fixture.setAttribute('selected', '');
+  describe('active attribute', () => {
+    // Attributes: tabid, disabled, active
+    it('should set the state to active when the attribute is set to true', async () => {
+      fixture.setAttribute('active', '');
       await tick();
-      expect(fixture.selected).toBeTruthy();
-      expect(isselected()).toBeTruthy();
+      expect(fixture.active).toBeTruthy();
+      expect(isactive()).toBeTruthy();
     });
 
-    it('should set the state to selected when the attribute is set to true', async () => {
-      fixture.selected = true;
+    it('should set the state to active when the attribute is set to true', async () => {
+      fixture.active = true;
       await tick();
-      expect(fixture.selected).toBeTruthy();
-      expect(isselected()).toBeTruthy();
+      expect(fixture.active).toBeTruthy();
+      expect(isactive()).toBeTruthy();
     });
 
     it('should remove active when the attribute is removed', async () => {
@@ -140,10 +140,10 @@ describe('Fluid tab', () => {
       expect(fixture.hasAttribute('disabled')).toBeTruthy();
     });
 
-    it('should set selected to false when disabled is true', async () => {
+    it('should set active to false when disabled is true', async () => {
       fixture.disabled = true;
       await tick();
-      expect(fixture.selected).toBeFalsy();
+      expect(fixture.active).toBeFalsy();
     });
 
     it('should set tabindex to -1 when disabled is true', async () => {
@@ -153,32 +153,32 @@ describe('Fluid tab', () => {
     });
   });
 
-  describe('aria-selected attribute', () => {
-    it('should have aria-selected set to false by default', () => {
-      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
-      expect(fixture.getAttribute('aria-selected')).toBe('false');
+  describe('aria-active attribute', () => {
+    it('should have aria-active set to false by default', () => {
+      expect(fixture.hasAttribute('aria-active')).toBeTruthy();
+      expect(fixture.getAttribute('aria-active')).toBe('false');
     });
 
-    it('should have aria-selected set to false when the tab is not selected', async () => {
-      fixture.selected = false;
+    it('should have aria-active set to false when the tab is not active', async () => {
+      fixture.active = false;
       await tick();
-      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
-      expect(fixture.getAttribute('aria-selected')).toBe('false');
+      expect(fixture.hasAttribute('aria-active')).toBeTruthy();
+      expect(fixture.getAttribute('aria-active')).toBe('false');
     });
 
-    it('should have aria-selected set to true when the tab is selected', async () => {
-      fixture.selected = true;
+    it('should have aria-active set to true when the tab is active', async () => {
+      fixture.active = true;
       await tick();
-      expect(fixture.hasAttribute('aria-selected')).toBeTruthy();
-      expect(fixture.getAttribute('aria-selected')).toBe('true');
+      expect(fixture.hasAttribute('aria-active')).toBeTruthy();
+      expect(fixture.getAttribute('aria-active')).toBe('true');
     });
   });
 
-  describe('tabSelected event', () => {
+  describe('tabactive event', () => {
     it('should fire event when tab is clicked', async () => {
       getTabRootElement(fixture)?.click();
       await tick();
-      expect(tabSelected).toHaveBeenCalledTimes(1);
+      expect(tabActivated).toHaveBeenCalledTimes(1);
     });
   });
 });

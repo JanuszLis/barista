@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-/** Custom event implementation fires when the selected tab has changes */
-export class FluidTabGroupSelectedTabChanged extends CustomEvent<any> {
-  constructor(public selectedTab: string) {
-    super('selectedTabChanged', { bubbles: true, composed: true });
+/** Custom event implementation fires when the active tab has changes */
+/** Custom event implementation fires when the active tab has changes */
+export class FluidTabGroupActiveTabChanged extends CustomEvent<any> {
+  constructor(public activeTab: string) {
+    super('activeTabChanged', { bubbles: true, composed: true });
   }
 }
 
-/** Custom event implementation that fires when a tab is clicked providing the selected tab id  */
-export class FluidTabSelectedEvent extends CustomEvent<any> {
-  constructor(public selectedTabId: string) {
-    super('tabSelected', { bubbles: true, composed: true });
+/** Custom event implementation that fires when a tab is clicked providing the active tab id  */
+export class FluidTabActivatedEvent extends CustomEvent<any> {
+  constructor(public activeTab: string) {
+    super('tabActivated', { bubbles: true, composed: true });
   }
 }
 

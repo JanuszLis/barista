@@ -27,11 +27,11 @@ import {
 
 import { FluidTab } from '../tab/tab';
 import {
-  FluidTabSelectedEvent,
   FluidTabDisabledEvent,
-  FluidTabGroupSelectedTabChanged,
   FluidTabBlurredEvent,
   FluidTabActiveSetEvent,
+  FluidTabGroupActiveTabChanged,
+  FluidTabActivatedEvent,
 } from '../tab-events';
 import {
   ENTER,
@@ -87,37 +87,37 @@ export class FluidTabGroup extends LitElement {
    * @type string
    */
   @property({ type: String, reflect: true })
-  selectedTabId: string;
+  activetabid: string;
 
   /** Sets the activeTabId. Handles programatically calling the active setter on the fluid-tab */
   private _setActiveTabId(activeSetEvent: FluidTabActiveSetEvent): void {
-    this.selectedTabId = activeSetEvent.tabId;
+    this.activetabid = activeSetEvent.tabId;
     for (const tab of this.tabChildren) {
-      if (tab.tabid !== this.selectedTabId) {
-        tab.selected = false;
+      if (tab.tabid !== this.activetabid) {
+        tab.active = false;
       }
     }
   }
 
   /** Sets the active tab on click */
-  private _handleClick(event: FluidTabSelectedEvent): void {
+  private _handleClick(event: FluidTabActivatedEvent): void {
     const toActivateTab = this.tabChildren.find(
-      (tabItem) => tabItem.tabid === event.selectedTabId,
+      (tabItem) => tabItem.tabid === event.activeTab,
     );
 
     if (toActivateTab) {
       // Resets all tabs
-      const toResetTab = this.tabChildren.find((tab) => tab.selected);
+      const toResetTab = this.tabChildren.find((tab) => tab.active);
       if (toResetTab) {
         toResetTab.tabindex = -1;
-        toResetTab.selected = false;
+        toResetTab.active = false;
         toResetTab.tabbed = false;
       }
-      this.selectedTabId = event.selectedTabId;
+      this.activetabid = event.activeTab;
 
-      toActivateTab.selected = true;
+      toActivateTab.active = true;
       toActivateTab.tabindex = 0;
-      this.dispatchEvent(new FluidTabGroupSelectedTabChanged(event.selectedTabId));
+      this.dispatchEvent(new FluidTabGroupActiveTabChanged(event.activeTab));
     }
   }
 
@@ -139,14 +139,14 @@ export class FluidTabGroup extends LitElement {
       );
 
       if (toBeActivatedTab) {
-        const toDeactivateTab = this.tabChildren.find((tab) => tab.selected);
+        const toDeactivateTab = this.tabChildren.find((tab) => tab.active);
         if (toDeactivateTab) {
-          toDeactivateTab.selected = false;
+          toDeactivateTab.active = false;
         }
 
-        toBeActivatedTab.selected = true;
-        this.selectedTabId = toBeActivatedTab.tabid;
-        this.dispatchEvent(new FluidTabGroupSelectedTabChanged(this.selectedTabId));
+        toBeActivatedTab.active = true;
+        this.activetabid = toBeActivatedTab.tabid;
+        this.dispatchEvent(new FluidTabGroupActiveTabChanged(this.activetabid));
       }
     }
     // Arrow control (navigate tabs)
@@ -182,14 +182,14 @@ export class FluidTabGroup extends LitElement {
 
   /** Checks whether the next tab is also disabled or not and sets the next available tab as active  */
   private _handleDisabled(disableTabEvent: FluidTabDisabledEvent): void {
-    if (this.selectedTabId === disableTabEvent.tabId) {
+    if (this.activetabid === disableTabEvent.tabId) {
       this.setFirstEnabledTabActive();
     }
   }
 
-  /** Resets the tabindex if the user lost focus without activating the selected tab */
+  /** Resets the tabindex if the user lost focus without activating the activated tab */
   private _handleBlur(event: FluidTabBlurredEvent): void {
-    // Sets the selected but not activated tabs tabindex to -1
+    // Sets the tabindex but not activated tabs tabindex to -1
     const toDisableTabIndexTab = this.tabChildren.find(
       (tab) => tab.tabid === event.tabId,
     );
@@ -197,7 +197,7 @@ export class FluidTabGroup extends LitElement {
       toDisableTabIndexTab.tabindex = -1;
     }
     // Sets the active tabs tabindex to 0
-    const toEnableTabIndexTab = this.tabChildren.find((tab) => tab.selected);
+    const toEnableTabIndexTab = this.tabChildren.find((tab) => tab.active);
     if (toEnableTabIndexTab) {
       toEnableTabIndexTab.tabindex = 0;
     }
@@ -212,10 +212,10 @@ export class FluidTabGroup extends LitElement {
     }
     this.checkForMutipleActiveTabs();
     // Set a tab to active
-    const activeTab = this.tabChildren.find((tab) => tab.selected);
+    const activeTab = this.tabChildren.find((tab) => tab.active);
     if (activeTab) {
       activeTab.tabindex = 0;
-      this.selectedTabId = activeTab.tabid;
+      this.activetabid = activeTab.tabid;
     } else {
       this.setFirstEnabledTabActive();
     }
@@ -244,16 +244,16 @@ export class FluidTabGroup extends LitElement {
   /** Sets an available tab to active. (Not disabled) */
   setFirstEnabledTabActive(): void {
     let tabToEnable;
-    if (this.selectedTabId) {
+    if (this.activetabid) {
       tabToEnable = this.tabChildren.find(
-        (tab) => tab.tabid === this.selectedTabId,
+        (tab) => tab.tabid === this.activetabid,
       );
     } else {
       tabToEnable = this.tabChildren.find((tab) => !tab.disabled);
     }
     if (tabToEnable) {
       tabToEnable.active = true;
-      this.selectedTabId = tabToEnable.tabid;
+      this.activetabid = tabToEnable.tabid;
     }
   }
 
@@ -261,7 +261,7 @@ export class FluidTabGroup extends LitElement {
   checkForMutipleActiveTabs(): void {
     if (this.tabChildren.length > 0) {
       const tabs = this.tabChildren.filter((tab) => {
-        if (tab.selected) {
+        if (tab.active) {
           return tab;
         }
       });
@@ -269,13 +269,13 @@ export class FluidTabGroup extends LitElement {
       if (tabs.length > 1) {
         const activeTab = tabs[0];
         for (const tab of this.tabChildren) {
-          tab.selected = false;
+          tab.active = false;
         }
         const tabToBeActive = this.tabChildren.find(
           (tab) => tab.tabid === activeTab?.tabid,
         );
         if (tabToBeActive) {
-          tabToBeActive.selected = true;
+          tabToBeActive.active = true;
         }
       }
     }
